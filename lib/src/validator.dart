@@ -13,7 +13,7 @@ class QrValidator {
   /// Attempt to parse / generate the QR code data and check for any errors. The
   /// resulting [QrValidationResult] object will hold the status of the QR code
   /// as well as the generated QR code data.
-  static QrValidationResult validate({
+  QrValidationResult validate({
     required String data,
     int version = QrVersions.auto,
     int errorCorrectionLevel = QrErrorCorrectLevel.L,
@@ -29,7 +29,7 @@ class QrValidator {
           errorCorrectLevel: errorCorrectionLevel,
         );
       }
-      qrCode.make();
+
       return QrValidationResult(
           status: QrValidationStatus.valid, qrCode: qrCode);
     } on InputTooLongException catch (itle) {

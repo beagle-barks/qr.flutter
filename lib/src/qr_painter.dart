@@ -123,7 +123,7 @@ class QrPainter extends CustomPainter {
       throw QrUnsupportedVersionException(version);
     }
     // configure and make the QR code data
-    final validationResult = QrValidator.validate(
+    final validationResult = QrValidator().validate(
       data: data,
       version: version,
       errorCorrectionLevel: errorCorrectionLevel,
@@ -206,11 +206,12 @@ class QrPainter extends CustomPainter {
       emptyPixelPaint = _paintCache.firstPaint(QrCodeElement.codePixelEmpty);
       emptyPixelPaint!.color = emptyColor!;
     }
+    QrImage qrImage = QrImage(_qr!);
     for (var x = 0; x < _qr!.moduleCount; x++) {
       for (var y = 0; y < _qr!.moduleCount; y++) {
         // draw the finder patterns independently
         if (_isFinderPatternPosition(x, y)) continue;
-        final paint = _qr!.isDark(y, x) ? pixelPaint : emptyPixelPaint;
+        final paint = qrImage.isDark(y, x) ? pixelPaint : emptyPixelPaint;
         if (paint == null) continue;
         // paint a pixel
         left = paintMetrics.inset + (x * (paintMetrics.pixelSize + gap));
@@ -258,12 +259,14 @@ class QrPainter extends CustomPainter {
 
   bool _hasAdjacentVerticalPixel(int x, int y, int moduleCount) {
     if (y + 1 >= moduleCount) return false;
-    return _qr!.isDark(y + 1, x);
+    QrImage qrImage = QrImage(_qr!);
+    return qrImage.isDark(y + 1, x);
   }
 
   bool _hasAdjacentHorizontalPixel(int x, int y, int moduleCount) {
     if (x + 1 >= moduleCount) return false;
-    return _qr!.isDark(y, x + 1);
+    QrImage qrImage = QrImage(_qr!);
+    return qrImage.isDark(y, x + 1);
   }
 
   bool _isFinderPatternPosition(int x, int y) {

@@ -22,7 +22,7 @@ class _MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) {
     final message =
         // ignore: lines_longer_than_80_chars
-        'Hey this is a QR code. Change this value in the main_screen.dart file.';
+        'Hey this is a QR code. Change this value in the main_screen.dart file. OK?';
 
     final qrFutureBuilder = FutureBuilder<ui.Image>(
       future: _loadOverlayImage(),
@@ -37,7 +37,7 @@ class _MainScreenState extends State<MainScreen> {
             data: message,
             version: QrVersions.auto,
             eyeStyle: const QrEyeStyle(
-              eyeShape: QrEyeShape.square,
+              eyeShape: QrEyeShape.circle,
               color: Color(0xff128760),
             ),
             dataModuleStyle: const QrDataModuleStyle(
